@@ -1,0 +1,1 @@
+{"version":3,"sources":["editor.scss","style.css"],"names":[],"mappings":"AACA,yBACA,oBCIA","file":"style.css","sourcesContent":[".custom-container{\r\n    button{\r\n        background-color:red;\r\n    }\r\n}",".custom-container button {\n  background-color: red;\n}\n\n.custom-container button {\n  background-color: red;\n}"]}
