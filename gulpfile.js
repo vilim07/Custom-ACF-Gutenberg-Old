@@ -6,9 +6,7 @@ const postcss = require("gulp-postcss");
 const cssnano = require("cssnano");
 const compileSass = require("gulp-sass")(require("sass"));
 const autoprefixer = require("autoprefixer");
-var ts = require("gulp-typescript");
-var tsProject = ts.createProject("tsconfig.json");
-
+var run = require('gulp-run');
 
 
 const {src, series, parallel, dest, watch} = require("gulp");
@@ -16,9 +14,16 @@ const {src, series, parallel, dest, watch} = require("gulp");
 
 const jsPath ="src/js/**/*.js";
 
-const reactPath ="src/react/compiled/**/*.js";
+const reactSourcePath ="src/react/*.js";
+
+const reactPath ="src/react/compiled/*.js";
 
 const scssPath ="src/scss/**/*.scss";
+
+
+function reactMore(){
+    return run('npm run build:custom').exec();
+}
 
 function jsTask(){
     return src(jsPath)
@@ -29,6 +34,7 @@ function jsTask(){
         .pipe(dest("dist/js"));
     }
 function reactTask(){
+    reactMore()
     return src(reactPath)
         .pipe(sourcemaps.init())
         .pipe(concat("react.js"))
@@ -46,7 +52,8 @@ function scssTask(){
         .pipe(sourcemaps.write("."))
         .pipe(dest("dist/css"));
     }
+
 function watchTask(){
-    watch([scssPath, jsPath,reactPath], {interval: 1000}, parallel(scssTask, jsTask));
+    watch([scssPath, jsPath,reactSourcePath], {interval: 1000}, parallel(scssTask, jsTask,reactTask));
 }
 exports.default = series(parallel(jsTask,scssTask,reactTask),watchTask);

@@ -19,6 +19,7 @@ wp.blocks.registerBlockType("starter/test-block",{
             props.setAttributes({seljaci: seljaki.slice()})
 
         }
+        
         function updateSeljakBoja(e){
             const boja = e.target.value
             seljaki[e.target.parentNode.getAttribute("index")] = {...seljaki[e.target.parentNode.getAttribute("index")], boja};
@@ -44,7 +45,6 @@ wp.blocks.registerBlockType("starter/test-block",{
     const ssrProps = {
     block: 'starter/test-block',
     attributes: props.attributes
-
     }
         const [isSelected, setIsSelected] = React.useState(false);
         if (isSelected){
