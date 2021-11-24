@@ -3,12 +3,17 @@ class themeSettings {
     function __construct(){
         add_action('admin_menu', array($this, "themeSettings"));
         add_action('admin_init', array($this, "settings"));
-        add_action('admin_enqueue_scripts', array($this, 'media_uploader_enqueue'));
-    }
-    function media_uploader_enqueue() {
-    	wp_enqueue_media();
+        add_action('admin_enqueue_scripts', array($this, 'misha_include_js'));
     }
 
+    function misha_include_js() {
+
+        // I recommend to add additional conditions just to not to load the scipts on each page
+        
+        if ( ! did_action( 'wp_enqueue_media' ) ) {
+            wp_enqueue_media();
+        }
+    }
 
     function themeSettings(){
         add_menu_page("Theme Settings", "Theme Settings", "manage_options", "theme-settings-page", array($this, "themeSettingsHTML"));
@@ -21,25 +26,39 @@ class themeSettings {
 
 
     
-    function logoHtml(){ ?>
+    function logoHtml(){ 
     
-        <input id="background_image" type="text" name="background_image" value="<?php echo get_option('background_image'); ?>" />
-        <input id="upload_image_button" type="button" class="button-primary" value="Insert Image" />
+        if( $image = wp_get_attachment_image_src( $image_id ) ) {
 
-    <?php }
+        echo '<a href="#" class="misha-upl"><img style="max-width:250px;" src="' . $image[0] . '" /></a>
+            <a href="#" class="misha-rmv">Remove image</a>
+            <input type="hidden" name="logo" value="' . $image_id . '">';
+
+        } else {
+
+        echo '<a href="#" class="misha-upl">Upload image</a>
+            <a href="#" class="misha-rmv" style="display:none">Remove image</a>
+            <input type="hidden" name="logo" value="">';
+
+        } 
+
+    }
+
     function themeSettingsHTML(){?>
 
         <div class="wrap">
             <h1>Theme Settings</h1>
             <form action="options.php" method="POST">
                 <?php 
+                    settings_fields("themeSettings");
                     do_settings_sections("theme-settings-page");
                     submit_button();
                 ?>
             </form>
         </div>
 
-    <?php }
+    <?php 
+    }
 }
 
 $themeSettings = new themeSettings();

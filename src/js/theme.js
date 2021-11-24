@@ -1,22 +1,36 @@
+jQuery(function($){
 
-////odvojiti admin js
-jQuery(document).ready(function($){
-    var mediaUploader;
-    $('#upload_image_button').click(function(e) {
-      e.preventDefault();
-        if (mediaUploader) {
-        mediaUploader.open();
-        return;
-      }
-      mediaUploader = wp.media.frames.file_frame = wp.media({
-        title: 'Choose Image',
-        button: {
-        text: 'Choose Image'
-      }, multiple: false });
-      mediaUploader.on('select', function() {
-        var attachment = mediaUploader.state().get('selection').first().toJSON();
-        $('#background_image').val(attachment.url);
-      });
-      mediaUploader.open();
-    });
-  });
+	// on upload button click
+	$('body').on( 'click', '.misha-upl', function(e){
+
+		e.preventDefault();
+
+		var button = $(this),
+		custom_uploader = wp.media({
+			title: 'Insert image',
+			library : {
+				// uploadedTo : wp.media.view.settings.post.id, // attach to the current post?
+				type : 'image'
+			},
+			button: {
+				text: 'Use this image' // button label text
+			},
+			multiple: false
+		}).on('select', function() { // it also has "open" and "close" events
+			var attachment = custom_uploader.state().get('selection').first().toJSON();
+			button.html('<img src="' + attachment.url + '">').next().show().next().val(attachment.id);
+		}).open();
+	
+	});
+
+	// on remove button click
+	$('body').on('click', '.misha-rmv', function(e){
+
+		e.preventDefault();
+
+		var button = $(this);
+		button.next().val(''); // emptying the hidden field
+		button.hide().prev().html('Upload image');
+	});
+
+});

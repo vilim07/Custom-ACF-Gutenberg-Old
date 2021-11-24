@@ -11,14 +11,16 @@ var run = require('gulp-run');
 
 const {src, series, parallel, dest, watch} = require("gulp");
 
-
 const jsPath ="src/js/**/*.js";
 
 const reactSourcePath ="src/react/*.js";
 
 const reactPath ="src/react/compiled/*.js";
 
-const scssPath ="src/scss/**/*.scss";
+const scssWatchPath ="src/scss/**/*.scss";
+
+const scssPath ="src/scss/all.scss";
+
 
 
 function reactMore(){
@@ -54,6 +56,9 @@ function scssTask(){
     }
 
 function watchTask(){
-    watch([scssPath, jsPath,reactSourcePath], {interval: 1000}, parallel(scssTask, jsTask,reactTask));
+
+    watch([scssPath, jsPath], {interval: 1000}, parallel(scssTask, jsTask));
+    watch([reactSourcePath], {interval: 1000}, parallel(jsTask,reactTask));
+
 }
 exports.default = series(parallel(jsTask,scssTask,reactTask),watchTask);
