@@ -436,10 +436,19 @@ wp.blocks.registerBlockType("starter/hero-slider-block", {
       updateProps();
     }
 
+    function updateSlideImg(imgObject, field, index) {
+      console.log(imgObject);
+      console.log(index);
+      console.log(field);
+      Slides[index][field] = imgObject.sizes.full.url;
+      console.log(Slides[index]);
+      updateProps();
+    }
+
     function pushSlides(e) {
       Slides.push(Slides.length);
       Slides[Slides.length - 1] = {
-        backgroundImage: " ",
+        slideImg: " ",
         boja: " "
       };
       updateProps();
@@ -469,10 +478,11 @@ wp.blocks.registerBlockType("starter/hero-slider-block", {
           index: index,
           onChange: updateSlide
         }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(MediaUpload, {
-          field: "slideImg",
-          onSelect: updateSlide,
+          onSelect: function onSelect(media) {
+            updateSlideImg(media, "slideImg", index);
+          },
           type: "image",
-          value: slide.backgroundImage,
+          value: slide.slideImg,
           render: function render(_ref) {
             var open = _ref.open;
             return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(IconButton, {
@@ -480,11 +490,6 @@ wp.blocks.registerBlockType("starter/hero-slider-block", {
               icon: "upload"
             }, "Change");
           }
-        }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("input", {
-          type: "text",
-          field: "backgroundImage",
-          value: slide.backgroundImage,
-          placeholder: "Seljak Ime"
         }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("input", {
           type: "text",
           field: "boja",

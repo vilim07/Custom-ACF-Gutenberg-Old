@@ -129,11 +129,19 @@ wp.blocks.registerBlockType("starter/hero-slider-block",{
         console.log(Slides[e.target.parentNode.getAttribute("index")])
         updateProps()
     }
+    function updateSlideImg(imgObject, field, index){
+        console.log(imgObject)
+        console.log(index)
+        console.log(field)
+        Slides[index][field] = imgObject.sizes.full.url;
+        console.log(Slides[index])
+        updateProps()
+    }
     function pushSlides(e){
         Slides.push(Slides.length);  
         Slides[Slides.length-1] = 
         {
-            backgroundImage: " ",
+            slideImg: " ",
             boja: " ",
         };
         updateProps()
@@ -157,23 +165,26 @@ const ssrProps = {
                      {Slides.map(function(slide, index){
                           return (
                           <div index={index}  onChange={updateSlide}>
-                                <MediaUpload
-                                field="slideImg"
-                                onSelect={updateSlide}
-                                type="image"
-                                value={slide.backgroundImage}
-                                render={({open})=>{
-                                    return (<IconButton
-                                        onClick={open}
-                                        icon="upload"
-                                    >
-                                        Change
-                                    </IconButton>)
 
-                                }}
-                                />
-                                 <input type="text" field="backgroundImage" value={slide.backgroundImage}  placeholder="Seljak Ime"/>
-                                 <input type="text" field="boja" value={slide.boja}  placeholder="boja"/>
+                                    <MediaUpload
+                                    onSelect={(media)=>{
+                                        updateSlideImg(media, "slideImg", index)
+
+                                    }}
+                                    type="image"
+                                    value={slide.slideImg}
+                                    render={({open})=>{
+                                        return (<IconButton
+                                            onClick={open}
+                                            icon="upload"
+                                        >
+                                            Change
+                                        </IconButton>)
+
+                                    }}
+                                    /> 
+                             
+                                <input type="text" field="boja" value={slide.boja}  placeholder="boja"/>
 
                              <button index={index}  onClick={removeSlide}>X</button>
                              <br />
