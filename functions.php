@@ -180,7 +180,7 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 }
 /////////////////////////////////////////////
 
-wp_register_script("block-js",  get_template_directory_uri() . "/dist/react/react.js", array("wp-blocks"));
+wp_register_script("block-js",  get_template_directory_uri() . "/src/react/compiled/index.js", array("wp-blocks","wp-block-editor"));
 
 wp_register_style("custom-css",get_template_directory_uri() . "/dist/css/style.css");
 
