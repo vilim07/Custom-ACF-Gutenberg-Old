@@ -16,15 +16,15 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
-	<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
-	/>
-	<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/7.3.1/swiper-bundle.min.css" integrity="sha512-X6rkdr0JIxgdnOUEfnJENeCydCat1urriiDqzgUl92f9NSlnkSTWtlgiH8nxhxkK6nlZ3DxWf7cerVLvbo5NSg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 	<?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/7.3.1/swiper-bundle.min.js"></script>
+
 
 <div id="page" class="site">
 	<header id="masthead" class="site-header">

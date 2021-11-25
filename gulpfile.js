@@ -19,7 +19,7 @@ const reactPath ="src/react/compiled/*.js";
 
 const scssWatchPath ="src/scss/**/*.scss";
 
-const scssPath ="src/scss/all.scss";
+const scssPath ="src/scss/**/*.scss";
 
 
 

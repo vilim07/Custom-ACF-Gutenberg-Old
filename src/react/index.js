@@ -125,7 +125,7 @@ wp.blocks.registerBlockType("starter/hero-slider-block",{
     function updateSlide(e){
         console.log(e.target)
         const field = e.target.getAttribute("field")
-        Slides[e.target.parentNode.getAttribute("index")][field] = e.target.value
+        Slides[index][field] = e.target.value
         console.log(Slides[e.target.parentNode.getAttribute("index")])
         updateProps()
     }
@@ -141,8 +141,6 @@ wp.blocks.registerBlockType("starter/hero-slider-block",{
         Slides.push(Slides.length);  
         Slides[Slides.length-1] = 
         {
-            slideImg: " ",
-            boja: " ",
         };
         updateProps()
     }
@@ -164,9 +162,12 @@ const ssrProps = {
                 <div class="custom-container">
                      {Slides.map(function(slide, index){
                           return (
-                          <div index={index}  onChange={updateSlide}>
-
-                                    <MediaUpload
+                          <div index={index}  onChange={(e)=>
+                            updateSlide(e, index)
+                          } 
+                          class="one-repeat">
+                                
+                                <MediaUpload
                                     onSelect={(media)=>{
                                         updateSlideImg(media, "slideImg", index)
 
@@ -174,20 +175,25 @@ const ssrProps = {
                                     type="image"
                                     value={slide.slideImg}
                                     render={({open})=>{
-                                        return (<IconButton
+                                        return (
+                                        <div class="d-flex flex-column">
+                                            <img class="preview-bg-img" src={slide.slideImg} alt="" />
+                                            <p>Slide Background Image</p>
+                                            <IconButton
                                             onClick={open}
                                             icon="upload"
                                         >
-                                            Change
-                                        </IconButton>)
+                                                Change
+                                            </IconButton>
+                                        </div> 
+                                        )
 
                                     }}
-                                    /> 
-                             
-                                <input type="text" field="boja" value={slide.boja}  placeholder="boja"/>
-
+                                /> 
+                                <p>Slide Text</p>
+                                <textarea field="text"  value={slide.text}></textarea>
                              <button index={index}  onClick={removeSlide}>X</button>
-                             <br />
+                             <hr/>
                           </div>
                           )
                      })}
