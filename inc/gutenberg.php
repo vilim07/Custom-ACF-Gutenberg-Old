@@ -72,3 +72,31 @@ class HeroSliderBlock{
     }
 }
 $heroSliderBlock = new HeroSliderBlock();
+
+class HeroFlavorBlock{
+    function __construct(){
+        add_action("init", array($this, "adminAssets"));
+    }
+    function adminAssets(){
+
+        register_block_type("starter/hero-flavor-block", array(
+            "apiVersion"=> 2,
+            'attributes'      => array(
+                'content' => array(
+                    'type' => 'object',
+                    "default" => null              
+                    )
+            ),
+            "editor_script" => "block-js",
+            "style" => "custom-css",
+            "render_callback" => array($this, "theHTML"),
+
+        ));
+    }
+    function theHTML($attributes){
+        ob_start();
+        require get_template_directory() . '/template-parts/hero-flavor-block.php';
+        return ob_get_clean();
+    }
+}
+$heroFlavorBlock = new HeroFlavorBlock();

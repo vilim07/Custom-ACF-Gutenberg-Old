@@ -221,3 +221,149 @@ const ssrProps = {
         return null
     }
 })
+
+wp.blocks.registerBlockType("starter/hero-flavor-block",{
+    title:"Hero Flavor Block",
+    icon: "smiley",
+    category: "custom-theme-blocks",
+    attributes: {
+        content: {
+            type: "object",
+            default:{}
+        },
+
+    },
+
+
+    edit: function (props){
+        const Content = props.attributes.content;
+//FUNCTIONS
+    function updatePropsObject(){
+        props.setAttributes({content : Content})
+        console.log(props.attributes.content)
+    }
+
+    function updateSlide(e){
+        const field = e.target.getAttribute("field")
+        Content[field] = e.target.value       
+        updatePropsObject()
+    }
+    function updateSlideImg(imgObject, field){
+        Content[field] = imgObject.sizes.full.url;
+        updatePropsObject()
+    }
+//FUNCTIONS
+
+
+
+const ssrProps = {
+    block: 'starter/hero-flavor-block',
+    attributes: props.attributes
+    }
+        const [isSelected, setIsSelected] = React.useState(false);
+        if (isSelected){
+            return(
+                <div class="custom-container">
+                          <div  onChange={(e)=>
+                            updateSlide(e)
+                          } 
+                          class="one-repeat">
+                                
+                                <div class="d-flex">
+                                    <MediaUpload
+                                        onSelect={(media)=>{
+                                            updateSlideImg(media, "firstImg")
+
+                                        }}
+                                        type="image"
+                                        value={props.attributes.content.firstImg}
+                                        render={({open})=>{
+                                            return (
+                                            <div class="d-flex flex-column">
+                                                <img class="preview-img" src={props.attributes.content.firstImg} alt="" />
+                                                <p>Image 1</p>
+                                                <IconButton
+                                                onClick={open}
+                                                icon="upload"
+                                            >
+                                                    Change
+                                                </IconButton>
+                                            </div> 
+                                            )
+
+                                        }}
+                                    /> 
+                                    <MediaUpload
+                                        onSelect={(media)=>{
+                                            updateSlideImg(media, "secondImg")
+
+                                        }}
+                                        type="image"
+                                        value={props.attributes.content.secondImg}
+                                        render={({open})=>{
+                                            return (
+                                            <div class="d-flex flex-column">
+                                                <img class="preview-img" src={props.attributes.content.secondImg} alt="" />
+                                                <p>Image 2</p>
+                                                <IconButton
+                                                onClick={open}
+                                                icon="upload"
+                                            >
+                                                    Change
+                                                </IconButton>
+                                            </div> 
+                                            )
+
+                                        }}
+                                    /> 
+                                    <MediaUpload
+                                        onSelect={(media)=>{
+                                            updateSlideImg(media, "thirdImg")
+
+                                        }}
+                                        type="image"
+                                        value={props.attributes.content.thirdImg}
+                                        render={({open})=>{
+                                            return (
+                                            <div class="d-flex flex-column">
+                                                <img class="preview-img" src={props.attributes.content.thirdImg} alt="" />
+                                                <p>Image 3</p>
+                                                <IconButton
+                                                onClick={open}
+                                                icon="upload"
+                                            >
+                                                    Change
+                                                </IconButton>
+                                            </div> 
+                                            )
+
+                                        }}
+                                    /> 
+                                </div>
+                                <p>Slide Text</p>
+                                <textarea field="text"  value={props.attributes.content.flavorParagraph}></textarea>
+                             <hr/>
+                          </div>
+                     <br />
+                     <button onClick={() => setIsSelected(false)}>Finish Editing</button>
+                     
+                </div> 
+             )
+        }
+        else{
+            return(
+                <div onClick={() => setIsSelected(true)}>
+                    {
+                    wp.element.createElement( wp.editor.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.components.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.serverSideRender, ssrProps )
+                }
+                </div>
+            )
+        }
+       
+    },
+    save: function(props){
+        return null
+    }
+})

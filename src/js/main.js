@@ -1,4 +1,4 @@
-
+/* 
  jQuery(document).ready(function () {
     var mySwiper = new Swiper(".hero-vertical-swiper", {
         direction: "vertical",
@@ -17,3 +17,4 @@
         },
       });
   })
+ */

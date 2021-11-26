@@ -29,8 +29,8 @@
 <div id="page" class="site">
 	<header id="masthead" class="site-header">
 		<div class="container">
-			<div class="row ">
-				<nav id="site-navigation" class="main-navigation justify-content-between d-flex mt-4 mb-3 px-4">
+			<div class="row mt-3">
+				<nav id="site-navigation" class="main-navigation justify-content-between d-flex my-3 px-4">
 					<div class="logo d-flex">
 						<img class="rotating-part" src="<?php echo get_template_directory_uri() . "/img/logo-rotary(1).png" ?>" alt="">
 						<div class="static-part"></div>
