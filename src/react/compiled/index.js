@@ -535,7 +535,7 @@ wp.blocks.registerBlockType("starter/hero-flavor-block", {
   edit: function edit(props) {
     var Content = props.attributes.content; //FUNCTIONS
 
-    function updatePropsObject() {
+    function updatePropsObject(field) {
       props.setAttributes({
         content: Content
       });
@@ -550,7 +550,7 @@ wp.blocks.registerBlockType("starter/hero-flavor-block", {
 
     function updateSlideImg(imgObject, field) {
       Content[field] = imgObject.sizes.full.url;
-      updatePropsObject();
+      updatePropsObject(field);
     } //FUNCTIONS
 
 
@@ -589,44 +589,6 @@ wp.blocks.registerBlockType("starter/hero-flavor-block", {
             src: props.attributes.content.firstImg,
             alt: ""
           }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("p", null, "Image 1"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(IconButton, {
-            onClick: open,
-            icon: "upload"
-          }, "Change"));
-        }
-      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(MediaUpload, {
-        onSelect: function onSelect(media) {
-          updateSlideImg(media, "secondImg");
-        },
-        type: "image",
-        value: props.attributes.content.secondImg,
-        render: function render(_ref3) {
-          var open = _ref3.open;
-          return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
-            class: "d-flex flex-column"
-          }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("img", {
-            class: "preview-img",
-            src: props.attributes.content.secondImg,
-            alt: ""
-          }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("p", null, "Image 2"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(IconButton, {
-            onClick: open,
-            icon: "upload"
-          }, "Change"));
-        }
-      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(MediaUpload, {
-        onSelect: function onSelect(media) {
-          updateSlideImg(media, "thirdImg");
-        },
-        type: "image",
-        value: props.attributes.content.thirdImg,
-        render: function render(_ref4) {
-          var open = _ref4.open;
-          return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
-            class: "d-flex flex-column"
-          }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("img", {
-            class: "preview-img",
-            src: props.attributes.content.thirdImg,
-            alt: ""
-          }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("p", null, "Image 3"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(IconButton, {
             onClick: open,
             icon: "upload"
           }, "Change"));

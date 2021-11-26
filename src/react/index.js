@@ -238,7 +238,7 @@ wp.blocks.registerBlockType("starter/hero-flavor-block",{
     edit: function (props){
         const Content = props.attributes.content;
 //FUNCTIONS
-    function updatePropsObject(){
+    function updatePropsObject(field){
         props.setAttributes({content : Content})
         console.log(props.attributes.content)
     }
@@ -250,7 +250,7 @@ wp.blocks.registerBlockType("starter/hero-flavor-block",{
     }
     function updateSlideImg(imgObject, field){
         Content[field] = imgObject.sizes.full.url;
-        updatePropsObject()
+        updatePropsObject(field)
     }
 //FUNCTIONS
 
@@ -282,52 +282,6 @@ const ssrProps = {
                                             <div class="d-flex flex-column">
                                                 <img class="preview-img" src={props.attributes.content.firstImg} alt="" />
                                                 <p>Image 1</p>
-                                                <IconButton
-                                                onClick={open}
-                                                icon="upload"
-                                            >
-                                                    Change
-                                                </IconButton>
-                                            </div> 
-                                            )
-
-                                        }}
-                                    /> 
-                                    <MediaUpload
-                                        onSelect={(media)=>{
-                                            updateSlideImg(media, "secondImg")
-
-                                        }}
-                                        type="image"
-                                        value={props.attributes.content.secondImg}
-                                        render={({open})=>{
-                                            return (
-                                            <div class="d-flex flex-column">
-                                                <img class="preview-img" src={props.attributes.content.secondImg} alt="" />
-                                                <p>Image 2</p>
-                                                <IconButton
-                                                onClick={open}
-                                                icon="upload"
-                                            >
-                                                    Change
-                                                </IconButton>
-                                            </div> 
-                                            )
-
-                                        }}
-                                    /> 
-                                    <MediaUpload
-                                        onSelect={(media)=>{
-                                            updateSlideImg(media, "thirdImg")
-
-                                        }}
-                                        type="image"
-                                        value={props.attributes.content.thirdImg}
-                                        render={({open})=>{
-                                            return (
-                                            <div class="d-flex flex-column">
-                                                <img class="preview-img" src={props.attributes.content.thirdImg} alt="" />
-                                                <p>Image 3</p>
                                                 <IconButton
                                                 onClick={open}
                                                 icon="upload"
