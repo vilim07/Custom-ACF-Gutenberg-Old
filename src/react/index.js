@@ -1,4 +1,4 @@
-const { InspectorControls, InnerBlocks, MediaUpload, MediaUploadCheck  } = wp.blockEditor;
+const { InspectorControls, InnerBlocks, MediaUpload, MediaUploadCheck, RichText  } = wp.blockEditor;
 const { ToggleControl, PanelBody, PanelRow, CheckboxControl, SelectControl, ColorPicker, IconButton } = wp.components;
 const { Fragment } = wp.element;
 const { __ } = wp.i18n;
@@ -228,8 +228,8 @@ wp.blocks.registerBlockType("starter/hero-flavor-block",{
     category: "custom-theme-blocks",
     attributes: {
         content: {
-            type: "object",
-            default:{}
+            type: "array",
+            default:[]
         },
 
     },
@@ -237,65 +237,160 @@ wp.blocks.registerBlockType("starter/hero-flavor-block",{
 
     edit: function (props){
         const Content = props.attributes.content;
+        if (Content.length == 0){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+        }
 //FUNCTIONS
-    function updatePropsObject(field){
-        props.setAttributes({content : Content})
+    function updateProps(){
+        props.setAttributes({content : Content.slice()})
         console.log(props.attributes.content)
     }
 
-    function updateSlide(e){
-        const field = e.target.getAttribute("field")
-        Content[field] = e.target.value       
-        updatePropsObject()
+    function updateContentAdv(data, field){
+        Content[0][field] = data   
+        updateProps()
     }
-    function updateSlideImg(imgObject, field){
-        Content[field] = imgObject.sizes.full.url;
-        updatePropsObject(field)
+    function updateContentImg(imgObject, field){
+        Content[0][field] = imgObject.sizes.full.url;
+        updateProps()
+    }
+    function removeContentImg(field){
+        Content[0][field] = null;
+        updateProps()
     }
 //FUNCTIONS
 
 
 
-const ssrProps = {
-    block: 'starter/hero-flavor-block',
-    attributes: props.attributes
+    const ssrProps = {
+        block: 'starter/hero-flavor-block',
+        attributes: props.attributes
     }
+    const blockContent = Content[0];
         const [isSelected, setIsSelected] = React.useState(false);
         if (isSelected){
             return(
                 <div class="custom-container">
-                          <div  onChange={(e)=>
-                            updateSlide(e)
-                          } 
-                          class="one-repeat">
-                                
+                          <div class="one-repeat">
+                                <RichText
+                                    tagName="h1"
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "heading")
+
+                                    }}
+                                    value={blockContent.heading} 
+                                    allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                    placeholder={ __( 'Heading...' ) } 
+                                />
+                                <RichText
+                                    tagName="h3" 
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "subheading")
+
+                                    }}
+                                    value={blockContent.subheading} 
+                                    allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                    placeholder={ __( 'subheading...' ) }
+                                />
                                 <div class="d-flex">
                                     <MediaUpload
                                         onSelect={(media)=>{
-                                            updateSlideImg(media, "firstImg")
+                                            updateContentImg(media, "firstImg")
 
                                         }}
                                         type="image"
-                                        value={props.attributes.content.firstImg}
+                                        value={blockContent.firstImg}
                                         render={({open})=>{
                                             return (
-                                            <div class="d-flex flex-column">
-                                                <img class="preview-img" src={props.attributes.content.firstImg} alt="" />
+                                            <div class="d-flex flex-column justify-content-end">
+                                                <img class="preview-img" src={blockContent.firstImg} alt="" />
                                                 <p>Image 1</p>
-                                                <IconButton
-                                                onClick={open}
-                                                icon="upload"
-                                            >
-                                                    Change
-                                                </IconButton>
+                                                <div class="d-flex">
+                                                    <IconButton
+                                                    onClick={open}
+                                                    icon="upload">
+                                                        Change
+                                                    </IconButton>
+                                                    <button
+                                                        class="ms-2"
+                                                        onClick={(media)=>{
+                                                            removeContentImg("firstImg")
+                                                        }}
+                                                    >
+                                                        X
+                                                    </button>
+                                                </div>
                                             </div> 
                                             )
 
                                         }}
                                     /> 
+                                        <MediaUpload
+                                        onSelect={(media)=>{
+                                            updateContentImg(media, "secondImg")
+                                        }}
+                                        type="image"
+                                        value={blockContent.secondImg}
+                                        render={({open})=>{
+                                            return (
+                                            <div class="d-flex flex-column justify-content-end">
+                                                <img class="preview-img" src={blockContent.secondImg} alt="" />
+                                                <p>Image 2</p>
+                                                <div class="d-flex">
+                                                    <IconButton
+                                                    onClick={open}
+                                                    icon="upload">
+                                                        Change
+                                                    </IconButton>
+                                                    <button
+                                                        class="ms-2"
+                                                        onClick={(media)=>{
+                                                            removeContentImg("secondImg")
+                                                        }}
+                                                    >
+                                                        X
+                                                    </button>
+                                                </div>
+                                            </div> 
+                                            )
+
+                                        }}
+                                    />
+                                        <MediaUpload
+                                        onSelect={(media)=>{
+                                            updateContentImg(media, "thirdImg")
+
+                                        }}
+                                        type="image"
+                                        value={blockContent.thirdImg}
+                                        render={({open})=>{
+                                            return (
+                                            <div class="d-flex flex-column justify-content-end">
+                                                <img class="preview-img" src={blockContent.thirdImg} alt="" />
+                                                <p>Image 3</p>
+                                                <div class="d-flex">
+                                                    <IconButton
+                                                    onClick={open}
+                                                    icon="upload">
+                                                        Change
+                                                    </IconButton>
+                                                    <button
+                                                        class="ms-2"
+                                                        onClick={(media)=>{
+                                                            removeContentImg("thirdImg")
+                                                        }}
+                                                    >
+                                                        X
+                                                    </button>
+                                                </div>
+                                            </div> 
+                                            )
+
+                                        }}
+                                    />
                                 </div>
-                                <p>Slide Text</p>
-                                <textarea field="text"  value={props.attributes.content.flavorParagraph}></textarea>
+
                              <hr/>
                           </div>
                      <br />

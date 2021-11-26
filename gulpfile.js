@@ -19,7 +19,7 @@ const reactPath ="src/react/compiled/*.js";
 
 const scssWatchPath ="src/scss/**/*.scss";
 
-const scssPath ="src/scss/**/*.scss";
+const scssPath ="src/scss/all.scss";
 
 
 
@@ -57,7 +57,7 @@ function scssTask(){
 
 function watchTask(){
 
-    watch([scssPath, jsPath], {interval: 1000}, parallel(scssTask, jsTask));
+    watch([scssWatchPath, jsPath], {interval: 1000}, parallel(scssTask, jsTask));
     watch([reactSourcePath], {interval: 1000}, parallel(jsTask,reactTask));
 
 }

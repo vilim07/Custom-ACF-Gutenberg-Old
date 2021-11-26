@@ -2,6 +2,10 @@
     button{
         background-color:$secondary-color;
         width: fit-content;
+        border: 1px solid transparent;
+        padding: 0.5rem 0.8rem;
+        border-radius: 18px;
+        line-height: 0;
     }
     .preview-bg-img{
         width: 100%;

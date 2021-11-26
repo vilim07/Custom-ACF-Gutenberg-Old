@@ -1,5 +1,8 @@
 ///////////VENDORS//////////////
 
+
+@import "override.scss";
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import "../../node_modules/swiper/swiper";
 
@@ -7,5 +10,12 @@
 @import "variables.scss";
 @import "typography.scss";
 @import "header.scss";
-
+@import "general.scss";
 @import "editor.scss";
+@import "hero.scss";
+
+
+
+
+
+

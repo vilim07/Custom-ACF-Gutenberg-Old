@@ -8,3 +8,48 @@
         }
     }
 }
+.hero-flavor{
+    position: relative;
+    height: 100vh;
+    background-color: $secondary-color-faded;
+    img{
+        //width: 100%;
+        height: auto;
+        max-height: 25vh;
+        object-fit: contain;
+        box-shadow: 0px 0px 0px 6px rgba(255,255,255,1);
+        transform-origin: center;
+
+        &:first-of-type{
+            transform: rotate(7deg);
+        }
+        &:nth-of-type(2){
+            transform: rotate(21deg);
+            margin-top: -2%;
+        }
+        &:nth-of-type(3){
+            transform: rotate(-7deg);
+            margin-top: -2%;
+        }
+    }
+    .bg-rotary-gear{
+        position: absolute;
+        width: 45vw;
+        height: fit-content;
+        z-index: 0;
+        fill: rgba($primary-color, .05);
+        transform-origin: center;
+        animation: rotate360 180s infinite;
+        left: -25vw;
+
+
+    }
+    .container{
+        z-index: 1;
+        position: relative;
+    }
+}
+@keyframes rotate360 {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+  }

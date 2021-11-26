@@ -83,8 +83,8 @@ class HeroFlavorBlock{
             "apiVersion"=> 2,
             'attributes'      => array(
                 'content' => array(
-                    'type' => 'object',
-                    "default" => null              
+                    'type' => 'array',
+                    "default" => array()                
                     )
             ),
             "editor_script" => "block-js",
