@@ -89,6 +89,7 @@ function enters(){
   const vh = window.innerHeight;
   const vw = window.innerWidth;
 
+
   anime({
     targets:".bottom-enter",
     translateX:[vh,0],
@@ -185,7 +186,7 @@ jQuery(window).on("load", function() {
 
 
   butter.init({
-    wrapperId: 'primary',
+    wrapperId: 'page',
     cancelOnTouch: true
   });
 

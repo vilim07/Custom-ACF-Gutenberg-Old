@@ -7,13 +7,16 @@ header{
     transform: translateY(-115%);
     animation: slideInTop 1s ease-out 0.5s forwards;
     .row{
-        border-radius: 30px;
+        //border-radius: 30px;
         box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
         background-color: $white;
     }
     .menu{
         display: flex;
         align-items: center;
+    }
+    .menu-menu-1-container{
+        display: flex;
     }
     .main-navigation{
         .logo{

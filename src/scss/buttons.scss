@@ -3,7 +3,7 @@
     border: 2px solid $primary-color;
     font-weight: bold;
     color: $primary-color;
-    border-radius: 16px;
+    //border-radius: 16px;
     transition: 0.3s;
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
     &:hover{
@@ -11,4 +11,7 @@
         background-color: $primary-color;
         color: white;
     }
+}
+.btn{
+    border-radius: 0;
 }
