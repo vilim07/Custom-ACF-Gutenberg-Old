@@ -1,0 +1,23 @@
+.half-and-half{
+    img{
+        width: 100%;
+        max-height: 45vh;
+        object-fit: cover;
+    }
+    .left-img{
+        border-radius: 0 0 180px 0;
+    }
+    .right-img{
+        border-radius: 0 0 0 180px;
+    }
+}
+.quote-bubble{
+    .bubble{
+        background-color: $primary-color-faded;
+        background: rgba( 255, 255, 255, 0.25 );
+        backdrop-filter: blur( 4px );
+        -webkit-backdrop-filter: blur( 4px );
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
+        border-radius: 36px;
+    }
+}

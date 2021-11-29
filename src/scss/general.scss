@@ -3,3 +3,49 @@ section:first-of-type{
         padding-top: 100px;
     }
 }
+section{
+    overflow: hidden;
+}
+html{
+    background-color: $secondary-color-faded;
+    scroll-behavior:smooth;
+}
+.bg-rotary-gear{
+    position: fixed;
+    width: 45vw;
+    height: 45vw;
+    z-index: -1;
+    fill: rgba($primary-color, .05);
+    transition: 0.1s ease-out;
+    transform-origin: center;
+    //animation: rotate360 180s infinite;
+    left: -25vw;
+
+
+}
+@keyframes rotate360 {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+  }
+.site{
+    position: relative;
+    z-index: 0;
+}
+::-webkit-scrollbar-track {
+    //-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    //border-radius: 3px;
+    background-color: $primary-color-faded;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 6px;
+    border-radius: 6px;
+    background-color: $primary-color-faded;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 18px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color:  $secondary-color;
+}

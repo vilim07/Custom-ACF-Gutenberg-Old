@@ -180,6 +180,14 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 }
 /////////////////////////////////////////////
 
+/********************************************************/
+// Adding Dashicons in WordPress Front-end
+/********************************************************/
+add_action( 'wp_enqueue_scripts', 'load_dashicons_front_end' );
+function load_dashicons_front_end() {
+  wp_enqueue_style( 'dashicons' );
+}
+
 wp_register_script("block-js",  get_template_directory_uri() . "/src/react/compiled/index.js", array("wp-blocks","wp-block-editor"));
 
 wp_register_style("custom-css",get_template_directory_uri() . "/dist/css/style.css");

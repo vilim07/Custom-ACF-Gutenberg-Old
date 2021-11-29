@@ -1,0 +1,14 @@
+.primary-color-button{
+    background-color: transparent;
+    border: 2px solid $primary-color;
+    font-weight: bold;
+    color: $primary-color;
+    border-radius: 16px;
+    transition: 0.3s;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    &:hover{
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0)!important;
+        background-color: $primary-color;
+        color: white;
+    }
+}

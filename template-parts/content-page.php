@@ -9,7 +9,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>  data-barba="container" data-barba-namespace="<?php the_title() ?>">
 	
 
 	<?php starter_post_thumbnail(); ?>

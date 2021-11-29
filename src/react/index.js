@@ -3,6 +3,8 @@ const { ToggleControl, PanelBody, PanelRow, CheckboxControl, SelectControl, Colo
 const { Fragment } = wp.element;
 const { __ } = wp.i18n;
 
+//////////// TEST
+
 wp.blocks.registerBlockType("starter/test-block",{
     title:"Test Block",
     icon: "smiley",
@@ -94,7 +96,7 @@ wp.blocks.registerBlockType("starter/test-block",{
     }
 })
 
-
+//////////// HERO SLIDER
 wp.blocks.registerBlockType("starter/hero-slider-block",{
     title:"Hero Slider Block",
     icon: "smiley",
@@ -221,6 +223,7 @@ const ssrProps = {
         return null
     }
 })
+//////////// HERO FLAVOR
 
 wp.blocks.registerBlockType("starter/hero-flavor-block",{
     title:"Hero Flavor Block",
@@ -273,6 +276,38 @@ wp.blocks.registerBlockType("starter/hero-flavor-block",{
             return(
                 <div class="custom-container">
                           <div class="one-repeat">
+                                <MediaUpload
+                                        onSelect={(media)=>{
+                                            updateContentImg(media, "topImg")
+
+                                        }}
+                                        type="image"
+                                        value={blockContent.topImg}
+                                        render={({open})=>{
+                                            return (
+                                            <div class="d-flex flex-column justify-content-end">
+                                                <img class="preview-img" src={blockContent.topImg} alt="" />
+                                                <p>Top Image</p>
+                                                <div class="d-flex">
+                                                    <IconButton
+                                                    onClick={open}
+                                                    icon="upload">
+                                                        Change
+                                                    </IconButton>
+                                                    <button
+                                                        class="ms-2 remove-button"
+                                                        onClick={(media)=>{
+                                                            removeContentImg("topImg")
+                                                        }}
+                                                    >
+                                                        X
+                                                    </button>
+                                                </div>
+                                            </div> 
+                                            )
+
+                                        }}
+                                /> 
                                 <RichText
                                     tagName="h1"
                                     onChange={(data)=>{
@@ -313,7 +348,7 @@ wp.blocks.registerBlockType("starter/hero-flavor-block",{
                                                         Change
                                                     </IconButton>
                                                     <button
-                                                        class="ms-2"
+                                                        class="ms-2 remove-button"
                                                         onClick={(media)=>{
                                                             removeContentImg("firstImg")
                                                         }}
@@ -344,7 +379,7 @@ wp.blocks.registerBlockType("starter/hero-flavor-block",{
                                                         Change
                                                     </IconButton>
                                                     <button
-                                                        class="ms-2"
+                                                        class="ms-2 remove-button"
                                                         onClick={(media)=>{
                                                             removeContentImg("secondImg")
                                                         }}
@@ -376,7 +411,7 @@ wp.blocks.registerBlockType("starter/hero-flavor-block",{
                                                         Change
                                                     </IconButton>
                                                     <button
-                                                        class="ms-2"
+                                                        class="ms-2 remove-button"
                                                         onClick={(media)=>{
                                                             removeContentImg("thirdImg")
                                                         }}
@@ -394,6 +429,621 @@ wp.blocks.registerBlockType("starter/hero-flavor-block",{
                              <hr/>
                           </div>
                      <br />
+                     <button onClick={() => setIsSelected(false)}>Finish Editing</button>
+                     
+                </div> 
+             )
+        }
+        else{
+            return(
+                <div onClick={() => setIsSelected(true)}>
+                    {
+                    wp.element.createElement( wp.editor.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.components.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.serverSideRender, ssrProps )
+                }
+                </div>
+            )
+        }
+       
+    },
+    save: function(props){
+        return null
+    }
+})
+//////////// HALF AND HALF
+
+wp.blocks.registerBlockType("starter/half-and-half",{
+    title:"Half And Half",
+    icon: "smiley",
+    category: "custom-theme-blocks",
+    attributes: {
+        content: {
+            type: "array",
+            default:[]
+        },
+
+    },
+
+
+    edit: function (props){
+        const Content = props.attributes.content;
+        if (Content.length == 0){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+        }
+//FUNCTIONS
+    function updateProps(){
+        props.setAttributes({content : Content.slice()})
+        console.log(props.attributes.content)
+    }
+
+    function updateContentAdv(data, field){
+        Content[0][field] = data   
+        updateProps()
+    }
+    function updateContentImg(imgObject, field){
+        Content[0][field] = imgObject.sizes.full.url;
+        updateProps()
+    }
+    function removeContentImg(field){
+        Content[0][field] = null;
+        updateProps()
+    }
+//FUNCTIONS
+
+
+
+    const ssrProps = {
+        block: 'starter/half-and-half',
+        attributes: props.attributes
+    }
+    const blockContent = Content[0];
+        const [isSelected, setIsSelected] = React.useState(false);
+
+        if (isSelected){
+            return(
+                <div class="custom-container">
+                          <div class="one-repeat">
+                                <CheckboxControl
+                                    label="Flipped"
+                                    help=""
+                                    checked={blockContent.isFlipped}
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "isFlipped")
+
+                                    }}
+                                />
+                                <MediaUpload
+                                        onSelect={(media)=>{
+                                            updateContentImg(media, "halfImg")
+
+                                        }}
+                                        type="image"
+                                        value={blockContent.halfImg}
+                                        render={({open})=>{
+                                            return (
+                                            <div class="d-flex flex-column justify-content-end">
+                                                <img class="preview-img" src={blockContent.halfImg} alt="" />
+                                                <p>Half Image</p>
+                                                <div class="d-flex">
+                                                    <IconButton
+                                                    onClick={open}
+                                                    icon="upload">
+                                                        Change
+                                                    </IconButton>
+                                                    <button
+                                                        class="ms-2 remove-button"
+                                                        onClick={(media)=>{
+                                                            removeContentImg("halfImg")
+                                                        }}
+                                                    >
+                                                        X
+                                                    </button>
+                                                </div>
+                                            </div> 
+                                            )
+
+                                        }}
+                                /> 
+                                <RichText
+                                    tagName="h1"
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "heading")
+
+                                    }}
+                                    value={blockContent.heading} 
+                                    allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                    placeholder={ __( 'Heading...' ) } 
+                                />
+                                <RichText
+                                    tagName="p"
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "paragraph")
+
+                                    }}
+                                    value={blockContent.paragraph} 
+                                    allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                    placeholder={ __( 'Text...' ) } 
+                                />
+                                       
+
+                             <hr/>
+                          </div>
+                     <br />
+                     <button onClick={() => setIsSelected(false)}>Finish Editing</button>
+                     
+                </div> 
+             )
+        }
+        else{
+            return(
+                <div onClick={() => setIsSelected(true)}>
+                    {
+                    wp.element.createElement( wp.editor.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.components.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.serverSideRender, ssrProps )
+                }
+                </div>
+            )
+        }
+       
+    },
+    save: function(props){
+        return null
+    }
+})
+//////////// TEXT CENTER
+wp.blocks.registerBlockType("starter/text-center",{
+    title:"Text Center",
+    icon: "smiley",
+    category: "custom-theme-blocks",
+    attributes: {
+        content: {
+            type: "array",
+            default:[]
+        },
+
+    },
+
+
+    edit: function (props){
+        const Content = props.attributes.content;
+        if (Content.length == 0){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+        }
+//FUNCTIONS
+    function updateProps(){
+        props.setAttributes({content : Content.slice()})
+        console.log(props.attributes.content)
+    }
+
+    function updateContentAdv(data, field){
+        Content[0][field] = data   
+        updateProps()
+    }
+    function updateContentImg(imgObject, field){
+        Content[0][field] = imgObject.sizes.full.url;
+        updateProps()
+    }
+    function removeContentImg(field){
+        Content[0][field] = null;
+        updateProps()
+    }
+//FUNCTIONS
+
+
+
+    const ssrProps = {
+        block: 'starter/text-center',
+        attributes: props.attributes
+    }
+    const blockContent = Content[0];
+        const [isSelected, setIsSelected] = React.useState(false);
+
+        if (isSelected){
+            return(
+                <div class="custom-container">
+                          <div class="one-repeat">
+                                <RichText
+                                    tagName="h1"
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "heading")
+
+                                    }}
+                                    value={blockContent.heading} 
+                                    allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                    placeholder={ __( 'Heading...' ) } 
+                                />
+                                <RichText
+                                    tagName="p"
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "paragraph")
+
+                                    }}
+                                    value={blockContent.paragraph} 
+                                    allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                    placeholder={ __( 'Text...' ) } 
+                                />
+                                       
+
+                             <hr/>
+                          </div>
+                     <br />
+                     <button onClick={() => setIsSelected(false)}>Finish Editing</button>
+                     
+                </div> 
+             )
+        }
+        else{
+            return(
+                <div onClick={() => setIsSelected(true)}>
+                    {
+                    wp.element.createElement( wp.editor.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.components.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.serverSideRender, ssrProps )
+                }
+                </div>
+            )
+        }
+       
+    },
+    save: function(props){
+        return null
+    }
+})
+//////////// QUOTE BUBBLE
+
+wp.blocks.registerBlockType("starter/quote-bubble",{
+    title:"Quote Bubble",
+    icon: "smiley",
+    category: "custom-theme-blocks",
+    attributes: {
+        content: {
+            type: "array",
+            default:[]
+        },
+
+    },
+
+
+    edit: function (props){
+        const Content = props.attributes.content;
+        if (Content.length == 0){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+        }
+//FUNCTIONS
+    function updateProps(){
+        props.setAttributes({content : Content.slice()})
+        console.log(props.attributes.content)
+    }
+
+    function updateContentAdv(data, field){
+        Content[0][field] = data   
+        updateProps()
+    }
+    
+    function updateContentSelect(data, field){
+        console.log(data)
+        Content[0][field] = data   
+        updateProps()
+    }
+    function updateContentImg(imgObject, field){
+        Content[0][field] = imgObject.sizes.full.url;
+        updateProps()
+    }
+    function removeContentImg(field){
+        Content[0][field] = null;
+        updateProps()
+    }
+//FUNCTIONS
+
+
+
+    const ssrProps = {
+        block: 'starter/quote-bubble',
+        attributes: props.attributes
+    }
+    const blockContent = Content[0];
+        const [isSelected, setIsSelected] = React.useState(false);
+
+        if (isSelected){
+            return(
+                <div class="custom-container">
+                          <div class="one-repeat d-flex flex-column">
+                            <p>Block Position</p>
+                            <SelectControl
+                                label="Block Position"
+                                value={blockContent.blockPosition}
+                                options={ [
+                                    { label: 'Left', value: 'left' },
+                                    { label: 'Center', value: 'center' },
+                                    { label: 'Right', value: 'right' },
+                                ] }
+                                onChange={(data)=>{updateContentAdv(data, "blockPosition")}}
+                            />
+                                <RichText
+                                    tagName="p"
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "quote")
+
+                                    }}
+                                    value={blockContent.quote} 
+                                    allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                    placeholder={ __( 'quote...' ) } 
+                                />
+                                <div>
+                                    <RichText
+                                        tagName="p"
+                                        onChange={(data)=>{
+                                            updateContentAdv(data, "quoteBy")
+
+                                        }}
+                                        value={blockContent.quoteBy} 
+                                        allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                        placeholder={ __( 'Quote By...' ) } 
+                                    />
+                                </div>
+                                       
+
+                             <hr/>
+                          </div>
+                     <br />
+                     <button onClick={() => setIsSelected(false)}>Finish Editing</button>
+                     
+                </div> 
+             )
+        }
+        else{
+            return(
+                <div onClick={() => setIsSelected(true)}>
+                    {
+                    wp.element.createElement( wp.editor.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.components.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.serverSideRender, ssrProps )
+                }
+                </div>
+            )
+        }
+       
+    },
+    save: function(props){
+        return null
+    }
+})
+
+//////////////BIG IMAGE
+wp.blocks.registerBlockType("starter/big-image",{
+    title:"Big Image",
+    icon: "smiley",
+    category: "custom-theme-blocks",
+    attributes: {
+        content: {
+            type: "array",
+            default:[]
+        },
+
+    },
+
+
+    edit: function (props){
+        const Content = props.attributes.content;
+        if (Content.length == 0){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+        }
+//FUNCTIONS
+    function updateProps(){
+        props.setAttributes({content : Content.slice()})
+        console.log(props.attributes.content)
+    }
+
+    function updateContentAdv(data, field){
+        Content[0][field] = data   
+        updateProps()
+    }
+    
+    function updateContentSelect(data, field){
+        console.log(data)
+        Content[0][field] = data   
+        updateProps()
+    }
+    function updateContentImg(imgObject, field){
+        Content[0][field] = imgObject.sizes.full.url;
+        updateProps()
+    }
+    function removeContentImg(field){
+        Content[0][field] = null;
+        updateProps()
+    }
+//FUNCTIONS
+
+
+
+    const ssrProps = {
+        block: 'starter/big-image',
+        attributes: props.attributes
+    }
+    const blockContent = Content[0];
+        const [isSelected, setIsSelected] = React.useState(false);
+
+        if (isSelected){
+            return(
+                <div class="custom-container">
+                          <div class="one-repeat d-flex flex-column">
+                            <p>Size</p>
+                            <SelectControl
+                                label="Size"
+                                value={blockContent.imageSize}
+                                options={ [
+                                    { label: 'Small', value: 'col-6' },
+                                    { label: 'Medium', value: 'col-8' },
+                                    { label: 'Big', value: 'col-10' },
+                                    { label: 'Huge', value: 'col-12' },
+                                ] }
+                                onChange={(data)=>{updateContentAdv(data, "imageSize")}}
+                            />
+                            <MediaUpload
+                                        onSelect={(media)=>{
+                                            updateContentImg(media, "image")
+
+                                        }}
+                                        type="image"
+                                        value={blockContent.image}
+                                        render={({open})=>{
+                                            return (
+                                            <div class="d-flex flex-column justify-content-end">
+                                                <img class="preview-img" src={blockContent.image} alt="" />
+                                                <p>Half Image</p>
+                                                <div class="d-flex">
+                                                    <IconButton
+                                                    onClick={open}
+                                                    icon="upload">
+                                                        Change
+                                                    </IconButton>
+                                                    <button
+                                                        class="ms-2 remove-button"
+                                                        onClick={(media)=>{
+                                                            removeContentImg("image")
+                                                        }}
+                                                    >
+                                                        X
+                                                    </button>
+                                                </div>
+                                            </div> 
+                                            )
+
+                                        }}
+                                /> 
+                          </div>
+                     <br />
+                     <button onClick={() => setIsSelected(false)}>Finish Editing</button>
+                     
+                </div> 
+             )
+        }
+        else{
+            return(
+                <div onClick={() => setIsSelected(true)}>
+                    {
+                    wp.element.createElement( wp.editor.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.components.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.serverSideRender, ssrProps )
+                }
+                </div>
+            )
+        }
+       
+    },
+    save: function(props){
+        return null
+    }
+})
+
+wp.blocks.registerBlockType("starter/people-repeater",{
+    title:"Clanovi",
+    icon: "smiley",
+    category: "custom-theme-blocks",
+    attributes: {
+        content: {
+            type: "array",
+            default:[]
+        },
+    },
+
+
+    edit: function (props){
+        const Content = props.attributes.content;
+        if (Content.length == 0){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+            updateProps()
+        }
+//FUNCTIONS
+
+        function pushRow(e){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+            console.log(Content.length)
+            updateProps()
+        }
+        function removeRow(e){
+            Content.splice(e.target.getAttribute("index"), 1); 
+            updateProps()
+        }
+        function updateProps(){
+            props.setAttributes({content : Content.slice()})
+            console.log(props.attributes.content)
+        }
+
+        function updateContentAdv(data, field, index){
+            Content[index][field] = data;   
+            console.log(Content)
+            updateProps()
+        }
+
+
+//FUNCTIONS
+
+
+
+    const ssrProps = {
+    block: 'starter/people-repeater',
+    attributes: props.attributes
+    }    
+    const blockContent = Content[0];
+
+        const [isSelected, setIsSelected] = React.useState(false);
+        if (isSelected){
+            return(
+                <div class="custom-container">
+                        <RichText
+                                tagName="h2"
+                                onChange={(data)=>{
+                                    updateContentAdv(data, "heading", 0)
+
+                                }}
+                                value={blockContent.heading} 
+                                allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                placeholder={ __( 'Heading' ) } 
+                        />
+                     <div class="row">
+                        {Content.map(function(items, index){
+                            return (
+                            <div class="col-4 " index={index}>
+                                <div className="rounded border p-3">
+                                    <RichText
+                                            tagName="h3"
+                                            onChange={(data)=>{
+                                                updateContentAdv(data, "ime", index)
+
+                                            }}
+                                            value={items.ime} 
+                                            allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                            placeholder={ __( 'Ime osobe...' ) } 
+                                    />
+                                    <RichText
+                                        tagName="h4"
+                                        onChange={(data)=>{
+                                            updateContentAdv(data, "titula", index)
+
+                                        }}
+                                        value={items.titula} 
+                                        allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                        placeholder={ __( 'Titula...' ) } 
+                                    />
+
+                                    <button index={index}  onClick={removeRow}>X</button>
+                                    <br />
+                                </div>
+                            </div>
+                            )
+                        })}
+                     </div>
+                     <br />
+                     <button class="me-3" onClick={pushRow}>Add Row</button>
                      <button onClick={() => setIsSelected(false)}>Finish Editing</button>
                      
                 </div> 

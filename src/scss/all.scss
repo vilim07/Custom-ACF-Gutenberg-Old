@@ -7,15 +7,16 @@
 @import "../../node_modules/swiper/swiper";
 
 ///////////VENDORS//////////////
+
+@import "mixins.scss";
 @import "variables.scss";
+
+
 @import "typography.scss";
+@import "blocks.scss";
+
 @import "header.scss";
 @import "general.scss";
 @import "editor.scss";
 @import "hero.scss";
-
-
-
-
-
-
+@import "buttons.scss";

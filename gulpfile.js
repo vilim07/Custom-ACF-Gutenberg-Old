@@ -11,7 +11,10 @@ var run = require('gulp-run');
 
 const {src, series, parallel, dest, watch} = require("gulp");
 
-const jsPath ="src/js/**/*.js";
+const jsPath =[
+    "src/js/**/*.js"
+];
+const jsWatchPath = "src/js/**/*.js";
 
 const reactSourcePath ="src/react/*.js";
 
@@ -57,7 +60,7 @@ function scssTask(){
 
 function watchTask(){
 
-    watch([scssWatchPath, jsPath], {interval: 1000}, parallel(scssTask, jsTask));
+    watch([scssWatchPath, jsWatchPath], {interval: 1000}, parallel(scssTask, jsTask));
     watch([reactSourcePath], {interval: 1000}, parallel(jsTask,reactTask));
 
 }
