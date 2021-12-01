@@ -186,7 +186,7 @@ jQuery(window).on("load", function() {
 
 
   butter.init({
-    wrapperId: 'page',
+    wrapperId: 'motion',
     cancelOnTouch: true
   });
 

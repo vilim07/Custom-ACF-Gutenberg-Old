@@ -1066,3 +1066,133 @@ wp.blocks.registerBlockType("starter/people-repeater",{
         return null
     }
 })
+
+wp.blocks.registerBlockType("starter/video-block",{
+    title:"Video Block",
+    icon: "smiley",
+    category: "custom-theme-blocks",
+    attributes: {
+        content: {
+            type: "array",
+            default:[]
+        },
+
+    },
+
+
+    edit: function (props){
+        const Content = props.attributes.content;
+        if (Content.length == 0){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+        }
+//FUNCTIONS
+    function updateProps(){
+        props.setAttributes({content : Content.slice()})
+        console.log(props.attributes.content)
+    }
+
+    function updateContentAdv(data, field){
+        Content[0][field] = data   
+        updateProps()
+    }
+    
+    function updateContentSelect(data, field){
+        console.log(data)
+        Content[0][field] = data   
+        updateProps()
+    }
+    function updateContentImg(imgObject, field){
+        Content[0][field] = imgObject.sizes.full.url;
+        updateProps()
+    }
+    function updateContentVid(vidObject, field){
+        console.log(vidObject)
+        Content[0][field] = vidObject.url;
+        updateProps()
+    }
+    function removeContentImg(field){
+        Content[0][field] = null;
+        updateProps()
+    }
+//FUNCTIONS
+
+
+
+    const ssrProps = {
+        block: 'starter/video-block',
+        attributes: props.attributes
+    }
+    const blockContent = Content[0];
+        const [isSelected, setIsSelected] = React.useState(false);
+
+        if (isSelected){
+            return(
+                <div class="custom-container">
+                          <div class="one-repeat d-flex flex-column">
+                            <p>Size</p>
+                            <SelectControl
+                                label="Size"
+                                value={blockContent.vidSize}
+                                options={ [
+                                    { label: 'Normal', value: 0 },
+                                    { label: 'Full Witdh', value: 1 },
+                                ] }
+                                onChange={(data)=>{updateContentAdv(data, "vidSize")}}
+                            />
+                            <MediaUpload
+                                        onSelect={(media)=>{
+                                            updateContentVid(media, "video")
+
+                                        }}
+                                        type="video"
+                                        value={blockContent.video}
+                                        render={({open})=>{
+                                            return (
+                                            <div class="d-flex flex-column justify-content-end">
+                                                <video autoplay muted  class="preview-img" src={blockContent.video} alt=""/>
+                                                <p>Half Image</p>
+                                                <div class="d-flex">
+                                                    <IconButton
+                                                    onClick={open}
+                                                    icon="upload">
+                                                        Change
+                                                    </IconButton>
+                                                    <button
+                                                        class="ms-2 remove-button"
+                                                        onClick={(media)=>{
+                                                            removeContentImg("video")
+                                                        }}
+                                                    >
+                                                        X
+                                                    </button>
+                                                </div>
+                                            </div> 
+                                            )
+
+                                        }}
+                                /> 
+                          </div>
+                     <br />
+                     <button onClick={() => setIsSelected(false)}>Finish Editing</button>
+                     
+                </div> 
+             )
+        }
+        else{
+            return(
+                <div onClick={() => setIsSelected(true)}>
+                    {
+                    wp.element.createElement( wp.editor.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.components.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.serverSideRender, ssrProps )
+                }
+                </div>
+            )
+        }
+       
+    },
+    save: function(props){
+        return null
+    }
+})

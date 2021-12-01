@@ -15,12 +15,10 @@
 		<div class="site-info">
 			<div class="container">
 				<div class="row justify-content-center">
-					<div class="col-12 text-center">
-						<p>Obavezno footer © 2021 Rotary klub Zagreb. All rights reserved.</p>
-						<div class="d-flex justify-content-center">
-							<a href="https://my.rotary.org/en/privacy-policy"><p>Privacy Policy</p></a>
-							<a href="https://my.rotary.org/en/rotary-international-website-terms-use"><p>Terms of Use</p></a>
-						</div>
+					<div class="col-auto text-center d-flex">
+						<p class="me-2">© 2021 Rotary klub Zagreb. All rights reserved.</p>
+						<a class="me-2" href="https://my.rotary.org/en/privacy-policy"><p>Privacy Policy</p></a>
+						<a href="https://my.rotary.org/en/rotary-international-website-terms-use"><p>Terms of Use</p></a>
 					</div>
 				</div>
 			</div>

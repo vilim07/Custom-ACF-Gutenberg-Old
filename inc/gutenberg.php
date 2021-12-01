@@ -241,3 +241,31 @@ class PeopleRepeater{
     }
 }
 $peopleRepeater = new PeopleRepeater();
+
+class VideoBlock{
+    function __construct(){
+        add_action("init", array($this, "adminAssets"));
+    }
+    function adminAssets(){
+
+        register_block_type("starter/video-block", array(
+            "apiVersion"=> 2,
+            'attributes'      => array(
+                'content' => array(
+                    'type' => 'array',
+                    "default" => array()                
+                    )
+            ),
+            "editor_script" => "block-js",
+            "style" => "custom-css",
+            "render_callback" => array($this, "theHTML"),
+
+        ));
+    }
+    function theHTML($attributes){
+        ob_start();
+        require get_template_directory() . '/template-parts/video-block.php';
+        return ob_get_clean();
+    }
+}
+$videoBlock = new VideoBlock();
