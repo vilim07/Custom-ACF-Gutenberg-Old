@@ -1,14 +1,23 @@
 section:first-of-type{
     .row{
-        padding-top: 100px;
+       // padding-top: 100px;
+    }
+    .container, .container-fluid{
+        padding-top: 0 !important;
     }
 }
 section{
     overflow: hidden;
 }
 html{
-    background-color: $secondary-color-faded;
     scroll-behavior:smooth;
+}
+body{
+    background-image: url("../../img/concrete_seamless.jpg") !important;
+    background-attachment: fixed !important;
+}
+body{
+    margin: 0;
 }
 .bg-rotary-gear{
     position: fixed;
@@ -48,4 +57,20 @@ html{
     border-radius: 18px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color:  $secondary-color;
+}
+.img-c{
+    width: 100%!important;
+    height: 86vh;
+    object-fit: cover;
+}
+
+.hhImg{
+    height: 55vh;
+
+}
+main{
+    min-height: 100vh;
+}
+a:focus {
+    outline: none !important;
 }

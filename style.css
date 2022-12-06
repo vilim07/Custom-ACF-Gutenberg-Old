@@ -745,7 +745,6 @@ textarea {
 
 .post,
 .page {
-	margin: 0 0 1.5em;
 }
 
 .updated:not(.published) {

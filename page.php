@@ -14,6 +14,9 @@
 
 get_header();
 ?>
+<div id="motion">
+
+<span class="pseudo-header"></span>
 
 	<main id="primary" class="site-main">
 
@@ -34,5 +37,7 @@ get_header();
 	</main><!-- #main -->
 
 <?php
-get_sidebar();
+
 get_footer();
+?>
+</div>

@@ -52,7 +52,23 @@ function leaves(){
     easing:"easeInExpo"
     
   }); 
-
+  
+  anime({
+    targets:".bottom-leave-staggers",
+    translateY:vw,
+    opacity:0,
+    duration:1000,
+    delay: anime.stagger(100),
+    easing:"easeInExpo"
+    
+  }); 
+  anime({
+    targets:".fade-leave",
+    opacity:0,
+    duration:1000,
+    easing:"easeInExpo"
+    
+  }); 
   anime({
     targets:".right-leave",
     translateX:vw,
@@ -77,7 +93,14 @@ function leaves(){
     duration:1000,
     easing:"easeInExpo"
   }); 
-  
+  anime({
+    targets:".scale-leave",
+    scale:[1,0],
+    opacity:0,
+    duration:1000,
+    easing:"easeInExpo"
+  }); 
+
 /*   animation.finished.then(function() {
     // Do things...
   }); */
@@ -92,12 +115,17 @@ function enters(){
 
   anime({
     targets:".bottom-enter",
-    translateX:[vh,0],
+    translateY:[vh,0],
     opacity:[0,1],
     duration:1000,
     easing:"easeInExpo"
   }); 
-
+  anime({
+    targets:".fade-enter",
+    opacity:[0,1],
+    duration:1000,
+    easing:"easeInExpo"
+  }); 
   anime({
     targets:".right-enter",
     translateX:[vw,0],
@@ -124,6 +152,22 @@ function enters(){
     easing:"easeOutExpo"
   });
   anime({
+    targets:".bottom-enter-staggers",
+    translateY:[vh,0],
+    opacity:[0,1],
+    duration:1000,
+    delay: anime.stagger(100, {}),
+    easing:"easeOutExpo"
+  });
+  anime({
+    targets:".left-enter-stagger",
+    translateX:[-vw,0],
+    opacity:[0,1],
+    duration:1000,
+    delay: anime.stagger(100, {}),
+    easing:"easeOutExpo"
+  });
+  anime({
     targets:".popup-enter-staggers",
     scale:[0,1],
     //opacity:[0,1],
@@ -145,6 +189,8 @@ function enters(){
     duration:1000,
     easing:"easeOutExpo"
   }); 
+  jQuery(window).scrollTop(0);
+
 }
 function delay(n){
   n = n || 2000;
@@ -154,7 +200,23 @@ function delay(n){
     },n);
   });
 }
+function inits() {
+  AOS.init({});
+}
 
+barba.hooks.afterOnce(() => {
+  inits();
+});
+
+barba.hooks.after(() => {
+  inits();
+});
+
+document.addEventListener('aos:in', ({ detail }) => {
+  jQuery('video').each(function(){
+    jQuery(this)[0].play();
+  })
+});
 
 //////////////////////////
 jQuery(window).on("load", function() {
@@ -164,12 +226,20 @@ jQuery(window).on("load", function() {
       async leave(data){
         const done = this.async();
         leaves();
+
         await delay(1500);
+        
         done();
+        window.scroll(0, 0);
+
       },
 
       async enter(data) {
+        window.scroll(0, 0);
+
         enters();
+        AOS.refresh()
+
       },
       once(data){
         enters();
@@ -188,7 +258,7 @@ jQuery(window).on("load", function() {
   butter.init({
     wrapperId: 'motion',
     cancelOnTouch: true
-  });
+  }); 
 
 });
 

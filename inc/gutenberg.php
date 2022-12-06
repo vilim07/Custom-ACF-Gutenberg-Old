@@ -158,6 +158,35 @@ class TextCenter{
 }
 $textCenter = new TextCenter();
 
+class TextLeft{
+    function __construct(){
+        add_action("init", array($this, "adminAssets"));
+    }
+    function adminAssets(){
+
+        register_block_type("starter/text-left", array(
+            "apiVersion"=> 2,
+            'attributes'      => array(
+                'content' => array(
+                    'type' => 'array',  
+                    "default" => array()                
+                    )
+            ),
+            "editor_script" => "block-js",
+            "style" => "custom-css",
+            "render_callback" => array($this, "theHTML"),
+
+        ));
+    }
+    function theHTML($attributes){
+        ob_start();
+        require get_template_directory() . '/template-parts/text-left.php';
+        return ob_get_clean();
+    }
+}
+$textLeft = new TextLeft();
+
+
 class QuoteBubble{
     function __construct(){
         add_action("init", array($this, "adminAssets"));
@@ -269,3 +298,116 @@ class VideoBlock{
     }
 }
 $videoBlock = new VideoBlock();
+
+class Calendar{
+    function __construct(){
+        add_action("init", array($this, "adminAssets"));
+    }
+    function adminAssets(){
+
+        register_block_type("starter/calendar", array(
+            "apiVersion"=> 2,
+            'attributes'      => array(
+                'content' => array(
+                    'type' => 'array',
+                    "default" => array()                
+                    )
+            ),
+            "editor_script" => "block-js",
+            "style" => "custom-css",
+            "render_callback" => array($this, "theHTML"),
+
+        ));
+    }
+    function theHTML($attributes){
+        ob_start();
+        require get_template_directory() . '/template-parts/calendar.php';
+        return ob_get_clean();
+    }
+}
+$calendar = new Calendar();
+
+class PageTitle{
+    function __construct(){
+        add_action("init", array($this, "adminAssets"));
+    }
+    function adminAssets(){
+
+        register_block_type("starter/current-page-title", array(
+            "apiVersion"=> 2,
+            'attributes'      => array(
+                'content' => array(
+                    'type' => 'array',
+                    "default" => array()                
+                    )
+            ),
+            "editor_script" => "block-js",
+            "style" => "custom-css",
+            "render_callback" => array($this, "theHTML"),
+
+        ));
+    }
+    function theHTML($attributes){
+        ob_start();
+        require get_template_directory() . '/template-parts/current-page-title.php';
+        return ob_get_clean();
+    }
+}
+$pageTitle = new PageTitle();
+
+class ImageGrid{
+    function __construct(){
+        add_action("init", array($this, "adminAssets"));
+    }
+    function adminAssets(){
+
+        register_block_type("starter/image-grid", array(
+            "apiVersion"=> 2,
+            'attributes'      => array(
+                'content' => array(
+                    'type' => 'array',
+                    "default" => array()                
+                    )
+            ),
+            "editor_script" => "block-js",
+            "style" => "custom-css",
+            "render_callback" => array($this, "theHTML"),
+
+        ));
+    }
+    function theHTML($attributes){
+        ob_start();
+        require get_template_directory() . '/template-parts/image-grid.php';
+        return ob_get_clean();
+    }
+}
+$imageGrid = new ImageGrid();
+
+
+class PostCards{
+    function __construct(){
+        add_action("init", array($this, "adminAssets"));
+    }
+    function adminAssets(){
+
+        register_block_type("starter/post-cards", array(
+            "apiVersion"=> 2,
+            'attributes'      => array(
+                'content' => array(
+                    'type' => 'array',
+                    "default" => array()                
+                    )
+            ),
+            "editor_script" => "block-js",
+            "style" => "custom-css",
+            "render_callback" => array($this, "theHTML"),
+
+        ));
+    }
+    function theHTML($attributes){
+        ob_start();
+        require get_template_directory() . '/template-parts/post-cards.php';
+        return ob_get_clean();
+    }
+}
+$postCards = new PostCards();

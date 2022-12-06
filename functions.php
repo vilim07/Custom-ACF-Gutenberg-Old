@@ -209,5 +209,7 @@ wp_enqueue_script( 'theme-js', get_template_directory_uri() . '/dist/js/all.js',
 
 require get_template_directory() . '/inc/gutenberg.php';
 
+require get_template_directory() . '/inc/cpt-and-fields.php';
+
 require get_template_directory() . '/inc/themeSettings.php';
 

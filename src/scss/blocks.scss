@@ -21,3 +21,75 @@
         //border-radius: 36px;
     }
 }
+.calendar{
+    position: relative;
+    &::before{
+        content: " ";
+        position: absolute;
+        left: 50%;
+        width: 4px;
+        background-color: rgba(128, 128, 128, 0.616);
+        height: 100%;
+        z-index: -1;
+    }
+}
+.bg-white{
+    background-color: white;
+}
+.event{
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+}
+.card-person{
+    border: 3px solid $primary-color;
+    background-color: white;
+}
+.big-img{
+    .row{
+        position: relative;
+    }
+    .overlay{
+        img{
+            filter: brightness(80%);
+        }
+    }
+    img{
+        position: relative;
+    }
+    h1{
+        position: absolute;
+        font-weight: normal;
+        color: white;
+        left: 50%;
+        transform: translate(-50%, -100%);
+        width: fit-content;
+        top: 50%;
+        z-index: 3;
+    }
+}
+.post-card{
+    /* From https://css.glass */
+    background: rgba(0, 0, 0, 0);
+    //border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition:  0.2s all ease-in;
+    //border: 1px solid rgba(0, 0, 0, 0.3);
+    h4{
+        color: $text-color !important;
+
+    }
+    &:hover{
+        //transform: scale(1.05);
+    }
+}
+.bg-blur{
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+.post-thumb{
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+}

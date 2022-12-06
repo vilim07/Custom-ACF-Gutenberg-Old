@@ -1,5 +1,5 @@
 const { InspectorControls, InnerBlocks, MediaUpload, MediaUploadCheck, RichText  } = wp.blockEditor;
-const { ToggleControl, PanelBody, PanelRow, CheckboxControl, SelectControl, ColorPicker, IconButton } = wp.components;
+const { ToggleControl, PanelBody, PanelRow, CheckboxControl, SelectControl, ColorPicker, IconButton, DateTimePicker } = wp.components;
 const { Fragment } = wp.element;
 const { __ } = wp.i18n;
 
@@ -566,6 +566,17 @@ wp.blocks.registerBlockType("starter/half-and-half",{
                                     allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
                                     placeholder={ __( 'Text...' ) } 
                                 />
+                                <RichText
+                                    tagName="p"
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "btnUrl")
+
+                                    }}
+                                    value={blockContent.btnUrl} 
+                                    allowedFormats={ [  ] } 
+                                    placeholder={ __( 'Button url' ) } 
+                                />
+
                                        
 
                              <hr/>
@@ -664,6 +675,106 @@ wp.blocks.registerBlockType("starter/text-center",{
                                     }}
                                     value={blockContent.paragraph} 
                                     allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                    placeholder={ __( 'Text...' ) } 
+                                />
+                                       
+
+                             <hr/>
+                          </div>
+                     <br />
+                     <button onClick={() => setIsSelected(false)}>Finish Editing</button>
+                     
+                </div> 
+             )
+        }
+        else{
+            return(
+                <div onClick={() => setIsSelected(true)}>
+                    {
+                    wp.element.createElement( wp.editor.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.components.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.serverSideRender, ssrProps )
+                }
+                </div>
+            )
+        }
+       
+    },
+    save: function(props){
+        return null
+    }
+})
+
+wp.blocks.registerBlockType("starter/text-left",{
+    title:"Text Left",
+    icon: "smiley",
+    category: "custom-theme-blocks",
+    attributes: {
+        content: {
+            type: "array",
+            default:[]
+        },
+
+    },
+
+
+    edit: function (props){
+        const Content = props.attributes.content;
+        if (Content.length == 0){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+        }
+//FUNCTIONS
+    function updateProps(){
+        props.setAttributes({content : Content.slice()})
+        console.log(props.attributes.content)
+    }
+
+    function updateContentAdv(data, field){
+        Content[0][field] = data   
+        updateProps()
+    }
+    function updateContentImg(imgObject, field){
+        Content[0][field] = imgObject.sizes.full.url;
+        updateProps()
+    }
+    function removeContentImg(field){
+        Content[0][field] = null;
+        updateProps()
+    }
+//FUNCTIONS
+
+
+
+    const ssrProps = {
+        block: 'starter/text-left',
+        attributes: props.attributes
+    }
+    const blockContent = Content[0];
+        const [isSelected, setIsSelected] = React.useState(false);
+
+        if (isSelected){
+            return(
+                <div class="custom-container">
+                          <div class="one-repeat">
+                                <RichText
+                                    tagName="h1"
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "heading")
+
+                                    }}
+                                    value={blockContent.heading} 
+                                    allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                    placeholder={ __( 'Heading...' ) } 
+                                />
+                                <RichText
+                                    tagName="p"
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "paragraph")
+
+                                    }}
+                                    value={blockContent.paragraph} 
+                                    allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color', "core/image" ] } 
                                     placeholder={ __( 'Text...' ) } 
                                 />
                                        
@@ -882,8 +993,18 @@ wp.blocks.registerBlockType("starter/big-image",{
                                     { label: 'Medium', value: 'col-8' },
                                     { label: 'Big', value: 'col-10' },
                                     { label: 'Huge', value: 'col-12' },
+                                    { label: 'Full', value: 'full' },
                                 ] }
                                 onChange={(data)=>{updateContentAdv(data, "imageSize")}}
+                            />
+                            <CheckboxControl
+                                    label="Half Screen Height?"
+                                    help=""
+                                    checked={blockContent.halfHeight}
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "halfHeight")
+
+                                    }}
                             />
                             <MediaUpload
                                         onSelect={(media)=>{
@@ -896,7 +1017,6 @@ wp.blocks.registerBlockType("starter/big-image",{
                                             return (
                                             <div class="d-flex flex-column justify-content-end">
                                                 <img class="preview-img" src={blockContent.image} alt="" />
-                                                <p>Half Image</p>
                                                 <div class="d-flex">
                                                     <IconButton
                                                     onClick={open}
@@ -917,6 +1037,16 @@ wp.blocks.registerBlockType("starter/big-image",{
 
                                         }}
                                 /> 
+                                <RichText
+                                    tagName="h2"
+                                    onChange={(data)=>{
+                                        updateContentAdv(data, "heading")
+
+                                    }}
+                                    value={blockContent.heading} 
+                                    allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                    placeholder={ __( 'overlayText' ) } 
+                                />
                           </div>
                      <br />
                      <button onClick={() => setIsSelected(false)}>Finish Editing</button>
@@ -1172,6 +1302,395 @@ wp.blocks.registerBlockType("starter/video-block",{
 
                                         }}
                                 /> 
+                          </div>
+                     <br />
+                     <button onClick={() => setIsSelected(false)}>Finish Editing</button>
+                     
+                </div> 
+             )
+        }
+        else{
+            return(
+                <div onClick={() => setIsSelected(true)}>
+                    {
+                    wp.element.createElement( wp.editor.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.components.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.serverSideRender, ssrProps )
+                }
+                </div>
+            )
+        }
+       
+    },
+    save: function(props){
+        return null
+    }
+})
+
+wp.blocks.registerBlockType("starter/calendar",{
+    title:"Kalendar",
+    icon: "smiley",
+    category: "custom-theme-blocks",
+    attributes: {
+        content: {
+            type: "array",
+            default:[]
+        },
+
+    },
+
+
+    edit: function (props){
+        const Content = props.attributes.content;
+        if (Content.length == 0){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+        }
+//FUNCTIONS
+    function pushRow(e){
+        Content.push(Content.length);  
+        Content[Content.length-1] = {};
+        console.log(Content.length)
+        updateProps()
+    }
+    function removeRow(e){
+        Content.splice(e.target.getAttribute("index"), 1); 
+        updateProps()
+    }
+    function updateProps(){
+        props.setAttributes({content : Content.slice()})
+        console.log(props.attributes.content)
+    }
+
+    function updateContentAdv(data, field, index){
+        Content[index][field] = data;   
+        console.log(Content)
+        updateProps()
+    }
+    function switchThis(index, switcher){
+        if ((index >= 0) && (switcher >= 0) && (switcher < Content.length)) {
+            [Content[index], Content[switcher]] = [Content[switcher], Content[index]];
+            updateProps()
+
+        }
+
+
+    }
+//FUNCTIONS
+
+
+
+    const ssrProps = {
+        block: 'starter/calendar',
+        attributes: props.attributes
+    }
+    const blockContent = Content[0];
+    const [isSelected, setIsSelected] = React.useState(false);
+        if (isSelected){
+            return(
+                <div class="custom-container">
+                          <div class="one-repeat d-flex flex-column">
+                            {Content.map(function(items, index){
+                                return (
+                                <div class="row  border p-3" index={index}>
+                                        <DateTimePicker
+                                            currentDate={ items.date }
+                                            onChange={(data)=>{updateContentAdv(data, "date", index)}}
+                                            is12Hour={ false }
+                                        />
+                                        <RichText
+                                            tagName="h4"
+                                            onChange={(data)=>{
+                                                updateContentAdv(data, "ime", index)
+
+                                            }}
+                                            value={items.ime} 
+                                            allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                            placeholder={ __( 'Ime događaja...' ) } 
+                                        />
+                                        <RichText
+                                            tagName="p"
+                                            onChange={(data)=>{
+                                                updateContentAdv(data, "opis", index)
+
+                                            }}
+                                            value={items.opis} 
+                                            allowedFormats={ [ 'core/bold', 'core/italic', 'core/text-color' ] } 
+                                            placeholder={ __( 'Opis...' ) } 
+                                        />
+
+                                        <button onClick={(data)=>{ switchThis(index, index-1)}}><span class="dashicons dashicons-arrow-up-alt"></span></button>
+                                        <button class="mx-2" onClick={(data)=>{ switchThis(index, index+1)}}><span class="dashicons dashicons-arrow-down-alt"></span></button>
+
+                                        <button index={index}  onClick={removeRow}>X</button>
+                                        <br />
+                                </div>
+                                )
+                            })}
+
+                          </div>
+                     <br />
+                     <button class="me-3" onClick={pushRow}>Add Row</button>
+                     <button onClick={() => setIsSelected(false)}>Finish Editing</button>
+                     
+                </div> 
+             )
+        }
+        else{
+            return(
+                <div onClick={() => setIsSelected(true)}>
+                    {
+                    wp.element.createElement( wp.editor.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.components.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.serverSideRender, ssrProps )
+                }
+                </div>
+            )
+        }
+       
+    },
+    save: function(props){
+        return null
+    }
+})
+
+wp.blocks.registerBlockType("starter/current-page-title",{
+    title:"Page Title",
+    icon: "smiley",
+    category: "custom-theme-blocks",
+    attributes: {
+        content: {
+            type: "array",
+            default:[]
+        },
+
+    },
+
+
+    edit: function (props){
+        const Content = props.attributes.content;
+        if (Content.length == 0){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+        }
+//FUNCTIONS
+    function updateProps(){
+        props.setAttributes({content : Content.slice()})
+        console.log(props.attributes.content)
+    }
+
+    function updateContentAdv(data, field, index){
+        Content[index][field] = data;   
+        console.log(Content)
+        updateProps()
+    }
+
+//FUNCTIONS
+
+
+
+    const ssrProps = {
+        block: 'starter/current-page-title',
+        attributes: props.attributes
+    }
+    const blockContent = Content[0];
+    const [isSelected, setIsSelected] = React.useState(false);
+        if (isSelected){
+            return(
+                <div class="custom-container">
+                          <div class="one-repeat d-flex flex-column">
+                            
+
+                          </div>
+                     <br />
+                     <button onClick={() => setIsSelected(false)}>Finish Editing</button>
+                     
+                </div> 
+             )
+        }
+        else{
+            return(
+                <div onClick={() => setIsSelected(true)}>
+                    {
+                    wp.element.createElement( wp.editor.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.components.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.serverSideRender, ssrProps )
+                }
+                </div>
+            )
+        }
+       
+    },
+    save: function(props){
+        return null
+    }
+})
+
+wp.blocks.registerBlockType("starter/image-grid",{
+    title:"Image Grid",
+    icon: "smiley",
+    category: "custom-theme-blocks",
+    attributes: {
+        content: {
+            type: "array",
+            default:[]
+        },
+    },
+
+
+    edit: function (props){
+        const Content = props.attributes.content;
+        if (Content.length == 0){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+            updateProps()
+        }
+//FUNCTIONS
+
+        function pushRow(e){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+            console.log(Content.length)
+            updateProps()
+        }
+        function removeRow(e){
+            Content.splice(e.target.getAttribute("index"), 1); 
+            updateProps()
+        }
+        function updateProps(){
+            props.setAttributes({content : Content.slice()})
+            console.log(props.attributes.content)
+        }
+        function updateContentImg(imgObject, field, index){
+            Content[index][field] = imgObject.sizes.full.url;
+            updateProps()
+        }
+        function updateContentAdv(data, field, index){
+            Content[index][field] = data;   
+            console.log(Content)
+            updateProps()
+        }
+
+
+//FUNCTIONS
+
+
+
+    const ssrProps = {
+    block: 'starter/image-grid',
+    attributes: props.attributes
+    }    
+    const blockContent = Content[0];
+
+        const [isSelected, setIsSelected] = React.useState(false);
+        if (isSelected){
+            return(
+                <div class="custom-container">
+                     <div class="row">
+                        {Content.map(function(items, index){
+                            return (
+                            <div class="col-4 " index={index}>
+                                <MediaUpload
+                                        onSelect={(media)=>{
+                                            updateContentImg(media, "image", index)
+
+                                        }}
+                                        type="image"
+                                        value={items.image}
+                                        render={({open})=>{
+                                            return (
+                                            <div class="d-flex flex-column justify-content-end">
+                                                <img class="preview-img" src={items.image} alt="" />
+                                                <div class="d-flex">
+                                                    <IconButton
+                                                    onClick={open}
+                                                    icon="upload">
+                                                        Change
+                                                    </IconButton>
+                                                </div>
+                                            </div> 
+                                            )
+
+                                        }}
+                                /> 
+                                <button index={index}  onClick={removeRow}>X</button>
+
+                            </div>
+                            )
+                        })}
+                     </div>
+                     <br />
+                     <button class="me-3" onClick={pushRow}>Add Row</button>
+                     <button onClick={() => setIsSelected(false)}>Finish Editing</button>
+                     
+                </div> 
+             )
+        }
+        else{
+            return(
+                <div onClick={() => setIsSelected(true)}>
+                    {
+                    wp.element.createElement( wp.editor.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.components.ServerSideRender, ssrProps ),
+                    wp.element.createElement( wp.serverSideRender, ssrProps )
+                }
+                </div>
+            )
+        }
+       
+    },
+    save: function(props){
+        return null
+    }
+})
+
+wp.blocks.registerBlockType("starter/post-cards",{
+    title:"post-cards",
+    icon: "smiley",
+    category: "custom-theme-blocks",
+    attributes: {
+        content: {
+            type: "array",
+            default:[]
+        },
+
+    },
+
+
+    edit: function (props){
+        const Content = props.attributes.content;
+        if (Content.length == 0){
+            Content.push(Content.length);  
+            Content[Content.length-1] = {};
+        }
+//FUNCTIONS
+    function updateProps(){
+        props.setAttributes({content : Content.slice()})
+        console.log(props.attributes.content)
+    }
+
+    function updateContentAdv(data, field, index){
+        Content[index][field] = data;   
+        console.log(Content)
+        updateProps()
+    }
+
+//FUNCTIONS
+
+
+
+    const ssrProps = {
+        block: 'starter/post-cards',
+        attributes: props.attributes
+    }
+    const blockContent = Content[0];
+    const [isSelected, setIsSelected] = React.useState(false);
+        if (isSelected){
+            return(
+                <div class="custom-container">
+                          <div class="one-repeat d-flex flex-column">
+                            
+
                           </div>
                      <br />
                      <button onClick={() => setIsSelected(false)}>Finish Editing</button>
